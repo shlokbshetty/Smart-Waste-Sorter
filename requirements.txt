@@ -1,4 +1,5 @@
-tensorflow
+flask
 opencv-python
 numpy
-scikit-learn
+pyserial
+ultralytics
