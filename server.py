@@ -10,7 +10,7 @@ MODEL_PATH = 'yolov8m-cls.pt'
 CAMERA_ID = 0           
 ARDUINO_PORT = 'COM7'   # IMPORTANT: Change this to your Arduino Port (e.g., COM3, /dev/ttyUSB0)
 BAUD_RATE = 9600
-CONFIDENCE_THRESHOLD = 0.50 
+CONFIDENCE_THRESHOLD = 0.60
 
 app = Flask(__name__)
 
