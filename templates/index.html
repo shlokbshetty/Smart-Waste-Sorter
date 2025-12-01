@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Waste Sorter</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .wet-glow { box-shadow: 0 0 20px #22c55e; border-color: #22c55e; }
         .dry-glow { box-shadow: 0 0 20px #3b82f6; border-color: #3b82f6; }
-        .full-glow { box-shadow: 0 0 20px #ef4444; border-color: #ef4444; filter: grayscale(100%); }
+        .full-glow { box-shadow: 0 0 20px #ef4444; border-color: #ef4444; }
+        
+        /* Smooth transitions for status cards */
+        .status-card { transition: all 0.3s ease; }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen font-sans">
 
-    <!-- Header -->
     <nav class="bg-gray-800 border-b border-gray-700 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-green-400">
@@ -28,51 +28,58 @@
         </div>
     </nav>
 
-    <!-- BIN FULL ALERT -->
-    <div id="full-alert" class="hidden bg-red-600 text-white text-center py-4 font-bold text-xl uppercase tracking-widest animate-pulse">
-        <i class="fas fa-exclamation-triangle mr-2"></i> Warning: Dustbin is Full!
+    <div id="full-alert" class="hidden bg-red-600 text-white text-center py-4 font-bold text-xl uppercase tracking-widest animate-pulse border-b-4 border-red-800">
+        <i class="fas fa-exclamation-triangle mr-2"></i> <span id="alert-text">Warning: Bin is Full!</span>
     </div>
 
-    <!-- Main Content -->
     <div class="container mx-auto p-4 md:p-8 flex flex-col md:flex-row gap-8">
         
-        <!-- Left Column: Video Feed -->
         <div class="w-full md:w-2/3">
-            <div class="bg-black rounded-xl overflow-hidden shadow-2xl border-4 border-gray-700 relative" id="video-container">
-                <img src="/video_feed" class="w-full h-auto object-cover" alt="Live Feed">
+            <div class="bg-black rounded-xl overflow-hidden shadow-2xl border-4 border-gray-700 relative transition-all duration-300" id="video-container">
+                <img src="{{ url_for('video_feed') }}" class="w-full h-auto object-cover" alt="Live Feed">
                 
                 <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-lg">
-                    <span class="text-gray-300 text-sm">Status: </span>
-                    <span id="live-status" class="font-bold text-white">Idle</span>
+                    <span class="text-gray-300 text-sm">Mode: </span>
+                    <span id="live-status" class="font-bold text-white">Manual</span>
                 </div>
             </div>
         </div>
 
-        <!-- Right Column: Controls -->
         <div class="w-full md:w-1/3 flex flex-col gap-6">
             
-            <!-- Result Card -->
+            <div class="grid grid-cols-2 gap-4">
+                <div id="card-wet" class="status-card bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-600 text-center">
+                    <i class="fas fa-apple-alt text-2xl mb-2 text-green-500"></i>
+                    <h3 class="text-xs text-gray-400 uppercase">Wet Bin</h3>
+                    <div id="status-wet" class="text-xl font-bold text-green-400 mt-1">OK</div>
+                </div>
+
+                <div id="card-dry" class="status-card bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-600 text-center">
+                    <i class="fas fa-box-open text-2xl mb-2 text-blue-500"></i>
+                    <h3 class="text-xs text-gray-400 uppercase">Dry Bin</h3>
+                    <div id="status-dry" class="text-xl font-bold text-blue-400 mt-1">OK</div>
+                </div>
+            </div>
+
             <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
                 <h2 class="text-gray-400 text-sm uppercase tracking-wider mb-2">Detected Object</h2>
                 <div id="result-box" class="text-3xl font-bold mb-2 text-white">
                     Waiting...
                 </div>
-                <!-- Confidence Bar -->
                 <div class="flex justify-between items-center mt-4">
                     <span class="text-gray-500 text-sm">Confidence</span>
                     <div class="w-2/3 bg-gray-700 rounded-full h-2.5">
-                        <div id="conf-bar" class="bg-green-500 h-2.5 rounded-full" style="width: 0%"></div>
+                        <div id="conf-bar" class="bg-green-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Control Buttons -->
             <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
                 <h2 class="text-gray-400 text-sm uppercase tracking-wider mb-4">Controls</h2>
                 
                 <div class="flex gap-4">
                     <button id="btn-scan" onclick="triggerScan()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition transform active:scale-95 flex items-center justify-center gap-2">
-                        <i class="fas fa-camera"></i> Scan Once
+                        <i class="fas fa-camera"></i> Scan
                     </button>
 
                     <button id="btn-auto" onclick="toggleAuto()" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2">
@@ -81,7 +88,6 @@
                 </div>
             </div>
 
-            <!-- System Logs -->
             <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 flex-grow">
                 <h2 class="text-gray-400 text-sm uppercase tracking-wider mb-2">System Log</h2>
                 <div class="font-mono text-green-400 text-sm bg-black p-4 rounded-lg h-32 overflow-y-auto" id="logs">
@@ -92,7 +98,7 @@
     </div>
 
     <script>
-        let isBinFull = false;
+        let systemLocked = false; // True if EITHER bin is full
         let lastLog = "";
 
         // Poll server for status every 500ms
@@ -114,57 +120,110 @@
                 ? "px-3 py-1 rounded-full text-xs font-semibold bg-green-900 text-green-200"
                 : "px-3 py-1 rounded-full text-xs font-semibold bg-yellow-900 text-yellow-200";
 
-            // 2. Bin Full Logic
-            isBinFull = data.bin_full;
-            const alertBox = document.getElementById('full-alert');
-            const scanBtn = document.getElementById('btn-scan');
-            const resultBox = document.getElementById('result-box');
-            const vidContainer = document.getElementById('video-container');
+            // 2. Handle Dual Bin Full Logic
+            const wetFull = data.bin_full_wet;
+            const dryFull = data.bin_full_dry;
+            systemLocked = wetFull || dryFull;
 
-            if (isBinFull) {
-                alertBox.classList.remove('hidden');
-                scanBtn.disabled = true;
-                scanBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                resultBox.innerText = "BIN FULL";
-                resultBox.className = "text-3xl font-bold mb-2 text-red-500";
-                vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 border-red-500 relative full-glow";
-                return; 
+            // Update Wet Card
+            const wetCard = document.getElementById('card-wet');
+            const wetStatus = document.getElementById('status-wet');
+            if(wetFull) {
+                wetCard.className = "status-card bg-red-900/30 rounded-xl p-4 shadow-lg border-2 border-red-500 text-center animate-pulse";
+                wetStatus.innerText = "FULL";
+                wetStatus.className = "text-xl font-bold text-red-500 mt-1";
             } else {
-                alertBox.classList.add('hidden');
-                scanBtn.disabled = false;
-                scanBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                wetCard.className = "status-card bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-600 text-center";
+                wetStatus.innerText = "OK";
+                wetStatus.className = "text-xl font-bold text-green-400 mt-1";
             }
 
-            // 3. Normal UI Updates
-            resultBox.innerText = data.prediction;
-            
-            if (data.waste_type === 'wet') {
-                vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 relative transition-all duration-300 wet-glow";
-                resultBox.className = "text-3xl font-bold mb-2 text-green-400";
-            } else if (data.waste_type === 'dry') {
-                vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 relative transition-all duration-300 dry-glow";
-                resultBox.className = "text-3xl font-bold mb-2 text-blue-400";
+            // Update Dry Card
+            const dryCard = document.getElementById('card-dry');
+            const dryStatus = document.getElementById('status-dry');
+            if(dryFull) {
+                dryCard.className = "status-card bg-red-900/30 rounded-xl p-4 shadow-lg border-2 border-red-500 text-center animate-pulse";
+                dryStatus.innerText = "FULL";
+                dryStatus.className = "text-xl font-bold text-red-500 mt-1";
             } else {
-                vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 border-gray-700 relative";
-                resultBox.className = "text-3xl font-bold mb-2 text-white";
+                dryCard.className = "status-card bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-600 text-center";
+                dryStatus.innerText = "OK";
+                dryStatus.className = "text-xl font-bold text-blue-400 mt-1";
+            }
+
+            // 3. Global Alert Bar
+            const alertBox = document.getElementById('full-alert');
+            const alertText = document.getElementById('alert-text');
+            const scanBtn = document.getElementById('btn-scan');
+            const vidContainer = document.getElementById('video-container');
+
+            if (systemLocked) {
+                alertBox.classList.remove('hidden');
+                
+                if(wetFull && dryFull) alertText.innerText = "CRITICAL: BOTH BINS FULL!";
+                else if(wetFull) alertText.innerText = "ALERT: WET BIN IS FULL!";
+                else if(dryFull) alertText.innerText = "ALERT: DRY BIN IS FULL!";
+
+                // Disable Scan Button
+                scanBtn.disabled = true;
+                scanBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                scanBtn.innerHTML = '<i class="fas fa-ban"></i> Disabled';
+                
+                vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 border-red-500 relative full-glow";
+            } else {
+                alertBox.classList.add('hidden');
+                
+                // Enable Scan Button
+                scanBtn.disabled = false;
+                scanBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                scanBtn.innerHTML = '<i class="fas fa-camera"></i> Scan';
+            }
+
+            // 4. Detection UI Updates
+            const resultBox = document.getElementById('result-box');
+            resultBox.innerText = data.prediction;
+
+            // Only change border color if system is NOT locked
+            if (!systemLocked) {
+                if (data.waste_type === 'wet') {
+                    vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 relative transition-all duration-300 wet-glow";
+                    resultBox.className = "text-3xl font-bold mb-2 text-green-400";
+                } else if (data.waste_type === 'dry') {
+                    vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 relative transition-all duration-300 dry-glow";
+                    resultBox.className = "text-3xl font-bold mb-2 text-blue-400";
+                } else {
+                    vidContainer.className = "bg-black rounded-xl overflow-hidden border-4 border-gray-700 relative";
+                    resultBox.className = "text-3xl font-bold mb-2 text-white";
+                }
+            } else {
+                // If locked, text is red
+                resultBox.className = "text-3xl font-bold mb-2 text-red-500";
             }
 
             document.getElementById('conf-bar').style.width = (data.confidence * 100) + "%";
             document.getElementById('live-status').innerText = data.auto_mode ? "Auto Mode" : "Manual Mode";
             
-            if(data.prediction !== "Ready" && data.prediction !== "Unknown Object") {
+            // Logging
+            if(data.prediction !== "Ready" && data.prediction !== "Unknown Object" && !data.prediction.includes("FULL")) {
                  log(`Detected: ${data.prediction}`);
             }
+            if(wetFull && lastLog !== "ALERT: Wet Bin Full") log("ALERT: Wet Bin Full");
+            if(dryFull && lastLog !== "ALERT: Dry Bin Full") log("ALERT: Dry Bin Full");
         }
 
         async function triggerScan() {
-            if(isBinFull) return;
-            await fetch('/trigger', { method: 'POST' });
-            log("Manual Scan Triggered...");
+            if(systemLocked) return;
+            const res = await fetch('/trigger', { method: 'POST' });
+            const data = await res.json();
+            if(data.success) {
+                log("Manual Scan Triggered...");
+            } else {
+                log(data.message); // Should log "Bin(s) full..."
+            }
         }
 
         async function toggleAuto() {
-            if(isBinFull) return;
+            if(systemLocked) return;
             const res = await fetch('/toggle_auto', { method: 'POST' });
             const data = await res.json();
             const btn = document.getElementById('btn-auto');
@@ -183,7 +242,8 @@
         function log(msg) {
             if (msg === lastLog) return;
             const logBox = document.getElementById('logs');
-            logBox.innerHTML += `> ${msg}<br>`;
+            const time = new Date().toLocaleTimeString();
+            logBox.innerHTML += `<span class="opacity-50">[${time}]</span> ${msg}<br>`;
             logBox.scrollTop = logBox.scrollHeight;
             lastLog = msg;
         }
