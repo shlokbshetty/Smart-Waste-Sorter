@@ -174,6 +174,9 @@ Distributed under the **MIT License**. See `LICENSE.txt` for more information.
 **Shlok Shetty**  
 GitHub: `@shlokbshetty`  
 Email: `shettyshlok87@gmail.com`  
+**Shree Yadav**
+GitHub: `@shreeyadav06`  
+Email: `shreeyadav0123456789@gmail.com`  
 Project Link: https://github.com/shlokbshetty/classificationwaste
 
 <p align="right">(<a href="#top">back to top</a>)</p>
