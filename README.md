@@ -94,6 +94,7 @@ pip install -r requirements.txt
 Ensure the `yolov8m-cls.pt` model file is placed in the root directory of the project.
 
 4. **Setup Hardware**  
+"Make sure you have the right hardware components for the project (Hardware components will be specified soon)
 Connect your Arduino via USB. Identify its COM port (e.g., `COM3` or `/dev/ttyUSB0`).
 
 5. **Configure Port**  
