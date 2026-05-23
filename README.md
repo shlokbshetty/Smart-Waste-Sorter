@@ -25,8 +25,12 @@
 4. [Usage](#usage)
 5. [Hardware Setup](#hardware-setup)
 6. [Roadmap](#roadmap)
-7. [License](#license)
-8. [Contact](#contact)
+7. [Architecture Diagram](#architecture-diagram)
+8. [FlowChart](#flowchart)
+9. [Circuit Diagram](#circuit-diagram)
+10. [Working Project's Images](#working-project's-images)
+11. [License](#license)
+12. [Contact](#contact)
 
 ---
 
@@ -203,7 +207,6 @@ GitHub: `@shlokbshetty`
 Email: `shettyshlok87@gmail.com`  
 
 **Shree Yadav**
-
 GitHub: `@shreeyadav06`  
 Email: `shreeyadav0123456789@gmail.com`  
 Project Link: https://github.com/shlokbshetty/Smart-Waste-Sorter
