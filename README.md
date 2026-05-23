@@ -189,6 +189,8 @@ http://127.0.0.1:5000
 <img width="1280" height="960" alt="1" src="https://github.com/user-attachments/assets/be53ceaa-42f7-4e20-9d11-262a4f23a2be" />
 <img width="720" height="1280" alt="2" src="https://github.com/user-attachments/assets/76ee9424-5cd5-4aac-bd97-b81f9a303517" />
 <img width="1280" height="720" alt="3" src="https://github.com/user-attachments/assets/38c01880-f836-4966-94e7-2549c4ddb016" />
+<img width="1280" height="722" alt="4" src="https://github.com/user-attachments/assets/e7ba3364-9662-4761-85da-01756397b94e" />
+
 
 ---
 
