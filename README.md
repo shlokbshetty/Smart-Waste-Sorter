@@ -162,6 +162,32 @@ http://127.0.0.1:5000
 
 ---
 
+## Architecture Diagram
+
+<img width="1600" height="1283" alt="arch diagram" src="https://github.com/user-attachments/assets/b92fa957-87fb-4e06-8aba-8084669dce6c" />
+
+---
+
+## FlowChart 
+
+<img width="754" height="1600" alt="flow chart" src="https://github.com/user-attachments/assets/42fce35e-8c1d-4620-b3a6-ac422ee698ef" />
+
+---
+
+## Circuit Diagram
+
+<img width="1600" height="753" alt="circuit diagram" src="https://github.com/user-attachments/assets/a0659c91-30a5-485f-b4ee-7cc69fb2d1ed" />
+
+---
+
+## Working Project's Images
+
+<img width="1280" height="960" alt="1" src="https://github.com/user-attachments/assets/be53ceaa-42f7-4e20-9d11-262a4f23a2be" />
+<img width="720" height="1280" alt="2" src="https://github.com/user-attachments/assets/76ee9424-5cd5-4aac-bd97-b81f9a303517" />
+<img width="1280" height="720" alt="3" src="https://github.com/user-attachments/assets/38c01880-f836-4966-94e7-2549c4ddb016" />
+
+---
+
 ## License
 
 Distributed under the **MIT License**. See `LICENSE.txt` for more information.
@@ -175,6 +201,7 @@ Distributed under the **MIT License**. See `LICENSE.txt` for more information.
 **Shlok Shetty**  
 GitHub: `@shlokbshetty`  
 Email: `shettyshlok87@gmail.com`  
+
 **Shree Yadav**
 GitHub: `@shreeyadav06`  
 Email: `shreeyadav0123456789@gmail.com`  
