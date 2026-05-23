@@ -203,8 +203,9 @@ GitHub: `@shlokbshetty`
 Email: `shettyshlok87@gmail.com`  
 
 **Shree Yadav**
+
 GitHub: `@shreeyadav06`  
 Email: `shreeyadav0123456789@gmail.com`  
-Project Link: https://github.com/shlokbshetty/classificationwaste
+Project Link: https://github.com/shlokbshetty/Smart-Waste-Sorter
 
 <p align="right">(<a href="#top">back to top</a>)</p>
